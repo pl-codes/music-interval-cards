@@ -6,13 +6,13 @@ def create_app():
     @app.route('/register', methods=['GET', 'POST'])
     def user_info():
         if request.method == 'POST':
-            first_name = request.form.get('first-name')
-            last_name = request.form.get('last-name')
+            name = request.form.get('name')
+            #last_name = request.form.get('last-name')
             email = request.form.get('email')
             pswd = request.form.get('pswd')
             pswd_repeat = request.form.get('pswd-repeat')
 
-            print(first_name, last_name, email, pswd, pswd_repeat)
+            print(name, email, pswd, pswd_repeat)
             #return f'{first_name}, {last_name}, {email} {pswd}, {pswd_repeat}'
             return f'Info received'
         else:
