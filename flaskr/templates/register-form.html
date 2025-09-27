@@ -14,28 +14,61 @@
                                 
             <h1>Register</h1>        
                         
-            <form action="/register" method="post">
+            <form action="/" method="post">
+                {{ form.hidden_tag()}}
             <p id="p1">Please fill in this form to create an account</p>
             
                 <div class="input-group">
+                    {{ form.username.label }}
+                    {{ form.username }}
+                    {% for error in form.username.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                    <!--
                     <label for="name"><b>Name</b></label>
                     <input type="text" placeholder="e.g. John Smith" name="name" id="name" required>
+                    -->
                 </div>
                 <div class="input-group">
+                    {{ form.email.label }}
+                    {{ form.email }}
+                    {% for error in form.email.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                    <!--    
                     <label for="email"><b>Email</b></label>
                     <input type="text" placeholder="johnsmith@gmail.com" name="email" id="email" required>
+                    -->
                 </div>
                 <div class="input-group">
+                    {{ form.password.label }}
+                    {{ form.password }}
+                    {% for error in form.password.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                    <!--
                     <label for="pswd"><b>Password</b></label>
                     <input type="password" placeholder="Enter Password" name="pswd" id="pswd" required>
+                    -->
                 </div>
                 <div class="input-group">
+                    {{ form.confirm_password.label }}
+                    {{ form.confirm_password }}
+                    {% for error in form.confirm_password.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                    <!--
                     <label for="pswd-repeat"><b>Confirm Password</b></label>
                     <input type="password" placeholder="Re-enter Password" name="pswd-repeat" id="pswd-repeat" required>
+                    -->
                 </div>
-                            
+
             <p>By creating an account you agree to our <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms & Privacy</a></p>
+            
+            {{ form.submit(class="registration-btn") }}
+            <!--
             <button type="submit" class="registration-btn">Register</button>
+            -->
             </form>
         
             <p>Already have an account? <a href="#">Sign in</a></p>
