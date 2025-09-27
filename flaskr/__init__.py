@@ -27,6 +27,12 @@ def create_app():
             email = form.email.data
             password = form.password.data
             confirm_password = form.confirm_password.data
+
+            print(f"Username: {username}")
+            print(f"Email: {email}")
+            print(f"Password: {password}")
+            print(f"Confirmed Password: {confirm_password}")
+            
             return redirect(url_for("success"))
         return render_template('register-form.html', form=form)
     

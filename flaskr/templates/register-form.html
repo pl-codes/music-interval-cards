@@ -22,7 +22,7 @@
                     {{ form.username.label }}
                     {{ form.username }}
                     {% for error in form.username.errors %}
-                        <span class="error">{{ error }}</span>
+                        <span class="form-errors">{{ error }}</span>
                     {% endfor %}
                     <!--
                     <label for="name"><b>Name</b></label>
@@ -33,7 +33,7 @@
                     {{ form.email.label }}
                     {{ form.email }}
                     {% for error in form.email.errors %}
-                        <span class="error">{{ error }}</span>
+                        <span class="form-errors">{{ error }}</span>
                     {% endfor %}
                     <!--    
                     <label for="email"><b>Email</b></label>
@@ -44,7 +44,7 @@
                     {{ form.password.label }}
                     {{ form.password }}
                     {% for error in form.password.errors %}
-                        <span class="error">{{ error }}</span>
+                        <span class="form-errors">{{ error }}</span>
                     {% endfor %}
                     <!--
                     <label for="pswd"><b>Password</b></label>
@@ -55,7 +55,7 @@
                     {{ form.confirm_password.label }}
                     {{ form.confirm_password }}
                     {% for error in form.confirm_password.errors %}
-                        <span class="error">{{ error }}</span>
+                        <span class="form-errors">{{ error }}</span>
                     {% endfor %}
                     <!--
                     <label for="pswd-repeat"><b>Confirm Password</b></label>
