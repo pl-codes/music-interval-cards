@@ -1,2 +1,6 @@
 # Ignore Python cache
 __pycache__
+
+# Ignore virtual environments
+.virt-codespaces/
+.virt-local/
