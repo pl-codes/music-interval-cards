@@ -10,15 +10,20 @@ import time
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service)
 
-driver.get ("https://www.selenium.dev/selenium/web/web-form.html")
+driver.get ("http://localhost:5000/")
 
 title = driver.title
 driver.implicitly_wait(1)
+
+time.sleep(3)
 
 text_box = driver.find_element(By.NAME, "my-text")
 submit_button = driver.find_element(By.CSS_SELECTOR, "button")
 
 text_box.send_keys("Cool beans!")
+time.sleep(3)
+
 submit_button.click()
+time.sleep(3)
 
 driver.quit()
