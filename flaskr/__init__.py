@@ -6,6 +6,7 @@ from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'secret'
+    #app.run(debug=True, use_reloader=False)
 
     class RegisterForm(FlaskForm):
         username = StringField('Username', validators=[
@@ -38,21 +39,6 @@ def create_app():
     
     @app.route('/success')
     def success():
-        return "Registration successful!"
-    
-
-    '''
-    def user_info():
-        if request.method == 'POST':
-            name = request.form.get('name')            
-            email = request.form.get('email')
-            pswd = request.form.get('pswd')
-            pswd_repeat = request.form.get('pswd-repeat')
-
-            print(name, email, pswd, pswd_repeat)            
-            return f'Info received'
-        else:
-            return render_template('register-form.html')
-    '''
+        return "Registration successful!" 
 
     return app
