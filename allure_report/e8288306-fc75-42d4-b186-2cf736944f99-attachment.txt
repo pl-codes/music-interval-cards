@@ -1,0 +1,6 @@
+
+Page title is: Registration Page
+Username input: Jill_Brown
+Email input: jill.brown@gmail.com
+Password input: Zxcvbnm1
+Password input: Zxcvbnm1
