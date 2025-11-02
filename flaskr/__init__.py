@@ -10,13 +10,13 @@ def create_app():
 
     class RegisterForm(FlaskForm):
         username = StringField('Username', validators=[
-            DataRequired(), Length(min=2, max=30), Regexp('^(?=.*[a-zA-Z])[a-zA-Z0-9_]+$', message='Letters, numbers, underscores only—with at least one letter.')
+            DataRequired(), Regexp('^(?=.*[a-zA-Z])[a-zA-Z0-9_]{2,30}$', message='2-30 characters, letters, numbers, underscores only—with at least one letter.')
             ])
-        email = StringField('Email', validators=[DataRequired(), Email(granular_message=True)])
+        email = StringField('Email', validators=[DataRequired(), Email(granular_message=False)])
         password = PasswordField('Password', validators=[
-            DataRequired(), Regexp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$', message='Include at least one uppercase letter, one lowercase letter, and one number.'), Length(min=8, max=64), EqualTo('confirm_password', message='Passwords must match.')
+            DataRequired(), Regexp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,64}$', message='8-64 characters and must include at least one uppercase letter, one lowercase letter, and one number.')
             ])
-        confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
+        confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
         submit = SubmitField('Register')
 
 

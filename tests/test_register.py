@@ -11,7 +11,8 @@ def driver():
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
     driver.implicitly_wait(3)
-    yield driver    
+    yield driver
+    #input("\nHit Enter to quit the browser: ")    
     driver.quit()
 
 def fill_form(driver, username, email, password, confirm_password):
@@ -57,3 +58,7 @@ def test_form_valid(driver):
 
 def test_form_invalid(driver):
     fill_form(driver, ".", "jill.brown@@gmail.com", "badpsw", "Zxcvbnm1")
+    assert ".2-30 characters, letters, numbers, underscores only—with at least one letter." in driver.page_source, "Expected 'Username' error message not found"    # Error message for Username
+    assert ".Invalid email address." in driver.page_source, "Expected 'Email' error message not found"    # Error message for Email 
+    assert ".8-64 characters and must include at least one uppercase letter, one lowercase letter, and one number." in driver.page_source, "Expected 'Password' error message not found"    # Error message for Password 
+    assert ".Passwords must match." in driver.page_source, "Expected 'Confirm Password' error message not found"    # Error message for Password Confirmation  
