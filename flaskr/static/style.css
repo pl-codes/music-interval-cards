@@ -48,3 +48,40 @@ input::placeholder {
     margin-bottom: 15px;
     border-radius: 5px;
 }
+
+.password-group {
+    position: relative;
+}
+
+.password-group input {
+    padding-right: 2.5rem;
+}
+
+.password-group svg {
+    position:absolute;
+    right: 0.75rem;
+    top: 52%;
+    fill: #6e6a6a    
+}
+
+.password-group button {    /* This button is for the password "eye" toggle */ 
+    all: unset;
+    cursor: pointer;
+}
+
+#eye {
+    display: inline;
+}
+
+#slash_eye {
+    display: none;
+}
+
+#confirm_eye {
+    display: inline;
+}
+
+#confirm_slash_eye {
+    display: none;
+}
+
