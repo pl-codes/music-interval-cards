@@ -34,12 +34,13 @@ def create_app():
     @app.route('/', methods=['GET', 'POST'])
     def register():
         form = RegisterForm()
-        if form.validate_on_submit():
-            
+        if form.validate_on_submit():            
             username = form.username.data
             email = form.email.data
             password = form.password.data
             confirm_password = form.confirm_password.data
+
+            insert_user(username, email, password)
 
             print(f"Username: {username}")
             print(f"Email: {email}")
