@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
+from flaskr.users_db import insert_user
 import sqlite3
 
 def create_app():
@@ -19,16 +20,6 @@ def create_app():
             ])
         confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
         submit = SubmitField('Register')
-    
-    def insert_user(username, email, password):
-        conn = sqlite3.connect("users.db")
-        cursor = conn.cursor()
-        cursor.execute("""
-                       INSERT INTO users (username, email, password)
-                       VALUES (?, ?, ?)
-                    """, (username, email, password))
-        conn.commit()
-        conn.close()
 
 
     @app.route('/', methods=['GET', 'POST'])
