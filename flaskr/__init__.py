@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 from flaskr.users_db import insert_user
-from flaskr.card_app import random_number, process_card, get_row
+from flaskr.card_app import random_number, process_card
 import sqlite3
 
 def create_app():
