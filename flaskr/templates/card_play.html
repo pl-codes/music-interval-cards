@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Card Play</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='card_play.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Let's Practice Intervals!</h1>
+        <div class="card-container">
+            <div class="start_btn">
+                <button type="button" id="start_btn">Start</button>
+            </div>
+            <div class="card">
+                <button disabled="true" type="button" id="card">Card</button>
+            </div>
+            <div class="next">
+                <button disabled="true" type="button" id="next">Next</button> <span id="card_count">
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        let show_cards = [];
+        let deck_size = null;
+        let remaining_cards;
+
+        document.getElementById("start_btn").addEventListener("click", function(){
+            fetch_card('/start');
+            document.getElementById("next").disabled = false;
+            document.getElementById("card").disabled = false;
+        });
+
+        document.getElementById("card").addEventListener("click", function(){
+            if(document.getElementById("card").textContent === show_cards[0]){
+                document.getElementById("card").textContent = show_cards[1];
+            }
+            else{
+                document.getElementById("card").textContent = show_cards[0];
+            }
+        })
+        
+        document.getElementById("next").addEventListener("click", function(){
+            fetch_card('/next')            
+        });
+
+        
+        function fetch_card(route){
+            return fetch(route, {method: "POST"})
+                .then(response => response.json())
+                .then(data => {
+                    //console.log("Server said:", data.status);
+                    //console.log("Card Values:", data.card_values);
+                    show_cards = data.card_values;
+                    if (deck_size === null){
+                        deck_size = data.total_cards;
+                    }
+                    remaining_cards = data.cards_left
+
+                    document.getElementById("card").textContent = show_cards[0];
+
+                    let cards_used = deck_size - remaining_cards;
+                    document.getElementById("card_count").textContent = cards_used + "/" + deck_size;
+                    
+                    if (cards_used >= deck_size){
+                        document.getElementById("next").disabled = true;
+                    }                                        
+                })
+        }        
+
+    </script>
+    </body>
+</html>

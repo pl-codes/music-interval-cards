@@ -1,14 +1,14 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, jsonify, session, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 from flaskr.users_db import insert_user
+from flaskr.card_app import random_number, get_row
 import sqlite3
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'secret'
-    #app.run(debug=True, use_reloader=False)
+    app.config['SECRET_KEY'] = 'secret'    
 
     class RegisterForm(FlaskForm):
         username = StringField('Username', validators=[
@@ -19,10 +19,9 @@ def create_app():
             DataRequired(), Regexp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,64}$', message='8-64 characters and must include at least one uppercase letter, one lowercase letter, and one number.')
             ])
         confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
-        submit = SubmitField('Register')
+        submit = SubmitField('Register')    
 
-
-    @app.route('/', methods=['GET', 'POST'])
+    @app.route('/register', methods=['GET', 'POST'])
     def register():
         form = RegisterForm()
         if form.validate_on_submit():            
@@ -43,6 +42,44 @@ def create_app():
     
     @app.route('/success')
     def success():
-        return "Registration successful!" 
+        return "Registration successful!"
+    
+    @app.route('/play')
+    def play():
+        return render_template('card_play.html')
 
+    @app.route('/start', methods=["POST"])
+    def start():        
+        session["row_numbers"] = random_number()        
+
+        row_numbers = session["row_numbers"]
+        total_cards = len(row_numbers)
+        remaining_rows, card_values = get_row(row_numbers)
+        cards_left = len(remaining_rows)        
+        session["row_numbers"] = remaining_rows
+
+        print("Total cards:", total_cards)
+
+        return jsonify({
+            "status": "started",
+            "card_values": card_values,
+            "total_cards": total_cards,
+            "cards_left": cards_left
+            })
+    
+    @app.route('/next', methods=["POST"])
+    def next():
+        row_numbers = session["row_numbers"]
+        total_cards = len(row_numbers)
+        remaining_rows, card_values = get_row(row_numbers)
+        cards_left = len(remaining_rows)        
+        session["row_numbers"] = remaining_rows
+
+        return jsonify({
+            "status": "started",
+            "card_values": card_values,
+            "total_cards": total_cards,
+            "cards_left": cards_left
+            })
+    
     return app
