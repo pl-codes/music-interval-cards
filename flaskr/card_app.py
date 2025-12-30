@@ -8,6 +8,11 @@ def random_number():
     random.shuffle(numbers)
     return(numbers)
 
+def process_card(row_numbers):    
+    remaining_rows, card_values = get_row(row_numbers)
+    cards_left = len(remaining_rows)
+    return(remaining_rows, card_values, cards_left)
+
 def get_row(row_numbers):
     row = row_numbers.pop()
     card_values = select_card(row)

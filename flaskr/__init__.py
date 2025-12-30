@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 from flaskr.users_db import insert_user
-from flaskr.card_app import random_number, get_row
+from flaskr.card_app import random_number, process_card, get_row
 import sqlite3
 
 def create_app():
@@ -50,15 +50,13 @@ def create_app():
 
     @app.route('/start', methods=["POST"])
     def start():        
-        session["row_numbers"] = random_number()        
-
+        session["row_numbers"] = random_number()
         row_numbers = session["row_numbers"]
         total_cards = len(row_numbers)
-        remaining_rows, card_values = get_row(row_numbers)
-        cards_left = len(remaining_rows)        
-        session["row_numbers"] = remaining_rows
 
-        print("Total cards:", total_cards)
+        remaining_rows, card_values, cards_left = process_card(row_numbers)
+               
+        session["row_numbers"] = remaining_rows        
 
         return jsonify({
             "status": "started",
@@ -70,15 +68,14 @@ def create_app():
     @app.route('/next', methods=["POST"])
     def next():
         row_numbers = session["row_numbers"]
-        total_cards = len(row_numbers)
-        remaining_rows, card_values = get_row(row_numbers)
-        cards_left = len(remaining_rows)        
+
+        remaining_rows, card_values, cards_left = process_card(row_numbers)
+        
         session["row_numbers"] = remaining_rows
 
         return jsonify({
             "status": "started",
             "card_values": card_values,
-            "total_cards": total_cards,
             "cards_left": cards_left
             })
     

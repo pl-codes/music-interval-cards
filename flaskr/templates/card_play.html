@@ -27,7 +27,8 @@
 
     <script>
         let show_cards = [];
-        let deck_size = null;
+        let deck_size;
+        //let deck_size = null;
         let remaining_cards;
 
         document.getElementById("start_btn").addEventListener("click", function(){
@@ -57,9 +58,14 @@
                     //console.log("Server said:", data.status);
                     //console.log("Card Values:", data.card_values);
                     show_cards = data.card_values;
+                    if (route === '/start'){
+                        deck_size = data.total_cards;
+                    }
+                    /*
                     if (deck_size === null){
                         deck_size = data.total_cards;
                     }
+                    */
                     remaining_cards = data.cards_left
 
                     document.getElementById("card").textContent = show_cards[0];
