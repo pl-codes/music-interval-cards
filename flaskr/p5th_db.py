@@ -11,3 +11,7 @@ def select_card(card_id):
     row = cursor.fetchone()
     conn.close()
     return row
+
+'''
+def db_length():
+'''

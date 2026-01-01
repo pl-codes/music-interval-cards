@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="device-width, initial-scale=1.0">
+        <title>Interval Flip Cards</title>
+    </head>
+    
+    <body>
+        <h1>Let's Practice Musical Intervals</h1>
+        
+        <form method="POST">
+            <div class="interval_group">
+                {{ form.hidden_tag() }}
+                {{ form.choice.label }}
+                {{ form.choice }}
+                {{ form.submit }}
+            </div>
+        </form>
+    </body>
+</html>

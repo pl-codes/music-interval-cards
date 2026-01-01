@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, jsonify, session, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, RadioField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 from flaskr.users_db import insert_user
 from flaskr.card_app import random_number, process_card
@@ -19,7 +19,15 @@ def create_app():
             DataRequired(), Regexp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,64}$', message='8-64 characters and must include at least one uppercase letter, one lowercase letter, and one number.')
             ])
         confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
-        submit = SubmitField('Register')    
+        submit = SubmitField('Register')
+
+    class IntervalForm(FlaskForm):
+        choice = RadioField("Choose Interval",
+                            choices=[('p5th', 'Perfect 5th'), ('p4th', 'Perfect 4th')],
+                            validators=[DataRequired()]
+                            )
+        submit = SubmitField('Begin')
+        
 
     @app.route('/register', methods=['GET', 'POST'])
     def register():
@@ -40,21 +48,34 @@ def create_app():
             return redirect(url_for("success"))
         return render_template('register-form.html', form=form)
     
+    @app.route('/', methods=["GET", "POST"])
+    def index():
+        form = IntervalForm()
+        if form.validate_on_submit():
+            selection = form.choice.data
+            print("You selected", selection)
+            session["interval_selection"] = selection
+            return redirect(url_for('play'))
+        return render_template('index.html', form=form)
+
     @app.route('/success')
     def success():
         return "Registration successful!"
     
-    @app.route('/play')
-    def play():
+    @app.route('/play', methods=["GET", "POST"])
+    def play():        
         return render_template('card_play.html')
 
     @app.route('/start', methods=["POST"])
     def start():        
         session["row_numbers"] = random_number()
+        
         row_numbers = session["row_numbers"]
+        interval_selection = session["interval_selection"]
+
         total_cards = len(row_numbers)
 
-        remaining_rows, card_values, cards_left = process_card(row_numbers)
+        remaining_rows, card_values, cards_left = process_card(interval_selection, row_numbers)
                
         session["row_numbers"] = remaining_rows        
 
@@ -68,8 +89,9 @@ def create_app():
     @app.route('/next', methods=["POST"])
     def next():
         row_numbers = session["row_numbers"]
+        interval_selection = session["interval_selection"]
 
-        remaining_rows, card_values, cards_left = process_card(row_numbers)
+        remaining_rows, card_values, cards_left = process_card(interval_selection, row_numbers)
         
         session["row_numbers"] = remaining_rows
 
