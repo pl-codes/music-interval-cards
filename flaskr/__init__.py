@@ -68,12 +68,10 @@ def create_app():
 
     @app.route('/start', methods=["POST"])
     def start():        
-        session["row_numbers"] = random_number()
-        
-        row_numbers = session["row_numbers"]
         interval_selection = session["interval_selection"]
 
-        total_cards = len(row_numbers)
+        session["row_numbers"], total_cards = random_number(interval_selection)        
+        row_numbers = session["row_numbers"]        
 
         remaining_rows, card_values, cards_left = process_card(interval_selection, row_numbers)
                
