@@ -7,8 +7,12 @@ def random_number(interval_selection):
     random.shuffle(numbers)
     return(numbers, total_rows)
 
-def process_card(interval_selection, row_numbers):   
-    row = row_numbers.pop()
-    card_values = select_card(row, interval_selection)    
-    cards_left = len(row_numbers)
+def process_card(interval_selection, row_numbers):
+    if row_numbers:  
+        row = row_numbers.pop()
+        card_values = select_card(row, interval_selection)    
+        cards_left = len(row_numbers)
+    else:
+        cards_left = 0
+        card_values = ['Finished', 'Finished']
     return(row_numbers, card_values, cards_left)

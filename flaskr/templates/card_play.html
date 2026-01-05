@@ -54,18 +54,12 @@
         function fetch_card(route){
             return fetch(route, {method: "POST"})
                 .then(response => response.json())
-                .then(data => {
-                    //console.log("Server said:", data.status);
-                    //console.log("Card Values:", data.card_values);
+                .then(data => {                    
                     show_cards = data.card_values;
                     if (route === '/start'){
                         deck_size = data.total_cards;
                     }
-                    /*
-                    if (deck_size === null){
-                        deck_size = data.total_cards;
-                    }
-                    */
+                    
                     remaining_cards = data.cards_left
 
                     document.getElementById("card").textContent = show_cards[0];
@@ -75,7 +69,7 @@
                     
                     if (cards_used >= deck_size){
                         document.getElementById("next").disabled = true;
-                    }                                        
+                    }                                    
                 })
         }        
 
