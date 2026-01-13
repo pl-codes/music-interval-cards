@@ -1,6 +1,13 @@
 import sqlite3
 
 def insert_user(username, email, password):
+        '''
+        Purpose: Inserts new user into the users.db database
+        
+        :param username: User's username
+        :param email: User's email
+        :param password: User's password (to be hashed in the future)
+        '''
         conn = sqlite3.connect("users.db")
         cursor = conn.cursor()
         #password to be hashed in future
@@ -10,22 +17,3 @@ def insert_user(username, email, password):
                     """, (username, email, password))
         conn.commit()
         conn.close()
-
-
-
-'''
-conn = sqlite3.connect("users.db")
-cursor = conn.cursor()
-
-cursor.execute("""
-               CREATE TABLE IF NOT EXISTS users (
-               id INTEGER PRIMARY KEY AUTOINCREMENT,
-               username TEXT NOT NULL UNIQUE,
-               email TEXT NOT NULL UNIQUE,
-               password TEXT NOT NULL
-               )
-               """)
-
-conn.commit()
-conn.close()
-'''

@@ -1,5 +1,7 @@
 import sqlite3
 
+# One-time initializing script to create the users.db database
+ 
 conn = sqlite3.connect("users.db")
 cursor = conn.cursor()
 
