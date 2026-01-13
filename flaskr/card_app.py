@@ -26,7 +26,7 @@ def process_card(interval_selection, row_numbers):
     How:
         Uses the pop() function to get one number from the previously shuffled row_numbers.
         Then passes that number along with the users interval selection to the select_card() function to retrieve the card info.
-        The len() is used to determin the number of cards left.
+        The len() is used to determine the number of cards left.
         (An error handle is in place in case the row_numbers is empty using the if, else statements)
 
     :param interval_selection: This is essentially the database file name of the interval the user selected to practice.
