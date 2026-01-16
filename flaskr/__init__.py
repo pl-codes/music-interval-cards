@@ -106,8 +106,7 @@ def create_app():
                
         session["row_numbers"] = remaining_rows        
 
-        return jsonify({
-            "status": "started",
+        return jsonify({            
             "card_values": card_values,
             "total_cards": total_cards,
             "cards_left": cards_left
@@ -128,8 +127,7 @@ def create_app():
         
         session["row_numbers"] = remaining_rows
 
-        return jsonify({
-            "status": "started",
+        return jsonify({            
             "card_values": card_values,
             "cards_left": cards_left
             })
