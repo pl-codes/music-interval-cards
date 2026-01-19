@@ -3,19 +3,23 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
         <title>Interval Flip Cards</title>
     </head>
     
     <body>
-        <h1>Let's Practice Musical Intervals</h1>
-        
-        <form method="POST">
-            <div class="interval_group">
-                {{ form.hidden_tag() }}
-                {{ form.choice.label }}
-                {{ form.choice }}
-                {{ form.submit }}
+        <div class="container">
+            <h1>Let's Practice Musical Intervals</h1>
+            <div class="card-container">
+                <form method="POST">
+                    <div class="interval_group">
+                        {{ form.hidden_tag() }}
+                        {{ form.choice.label }}
+                        {{ form.choice }}
+                        {{ form.submit }}
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </body>
 </html>

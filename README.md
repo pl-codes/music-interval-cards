@@ -1,6 +1,6 @@
-# 🎼 Music Interval Flip Cards
+# 🎼🃏 Music Interval Flip Cards
 
-### 🃏 A flip card game application that helps music learners to memorize musical intervals.
+### A flip card game application that helps music learners to memorize musical intervals.
 
 The User:
 - Chooses an interval from a list, clicks **Begin**, and then is directed to another page to begin playing.
