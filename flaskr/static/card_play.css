@@ -9,14 +9,26 @@
     flex-direction: column;
 }
 
-.card {
+.flip-card-inner{
     position: relative;
     width: 250px;
     height: 80px;
 }
 
-#card {
-    position: relative;
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 250px;
+    height: 80px;
+}
+
+.front-card-btn {
+    position: absolute;
+    width: 250px;
+    height: 80px;
+}
+
+.back-card-btn {
+    position: absolute;
     width: 250px;
     height: 80px;
 }

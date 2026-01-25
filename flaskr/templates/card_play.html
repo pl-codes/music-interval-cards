@@ -15,8 +15,15 @@
             <div class="start_btn">
                 <button type="button" id="start_btn">Start</button>
             </div>
-            <div class="card">
-                <button disabled="true" type="button" id="card">Card</button><span id="lower-upper"></span>                
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <button class="front-card-btn" disabled="true" type="button" id="card">Card</button><span id="lower-upper"></span>                
+                    </div>
+                    <div class="flip-card-back">
+                        <button class="back-card-btn" type="button" id="back-card">Back Card</button>
+                    </div>
+                </div>
             </div>
             <div class="next">
                 <button disabled="true" type="button" id="next">Next</button> <span id="card_count">
@@ -24,6 +31,7 @@
             
         </div>
     </div>
+    
 
     <script>
         let show_cards = [];
