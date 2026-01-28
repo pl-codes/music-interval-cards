@@ -12,13 +12,13 @@
     <div class="container">
         <h1>Let's Practice Intervals!</h1>
         <div class="card-container">
-            <div class="start_btn">
-                <button type="button" id="start_btn">Start</button>
+            <div class="interval-label">
+                <label id="interval-label">Interval Label</label>
             </div>
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <button class="front-card-btn" disabled="true" type="button" id="card">Card</button><span id="lower-upper"></span>                
+                        <button class="front-card-btn" type="button" id="card">Card</button><span id="lower-upper"></span>                
                     </div>
                     <div class="flip-card-back">
                         <button class="back-card-btn" type="button" id="back-card">Back Card</button>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="next">
-                <button disabled="true" type="button" id="next">Next</button> <span id="card_count">
+                <button type="button" id="next">Next</button> <span id="card_count">
             </div>
             
         </div>
@@ -39,10 +39,9 @@
         let deck_size;        
         let remaining_cards;
 
-        document.getElementById("start_btn").addEventListener("click", function(){
+
+        document.addEventListener("DOMContentLoaded", function(){
             fetch_card('/start');
-            document.getElementById("next").disabled = false;
-            document.getElementById("card").disabled = false;
         });
 
         document.getElementById("card").addEventListener("click", function(){
@@ -68,6 +67,8 @@
                     show_cards = data.card_values;
                     if (route === '/start'){
                         deck_size = data.total_cards;
+                        interval_selection = data.interval_selection;
+                        document.getElementById("interval-label").textContent = interval_selection;
                     }
                     
                     remaining_cards = data.cards_left

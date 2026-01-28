@@ -21,6 +21,10 @@
     height: 80px;
 }
 
+.flip-card-front {
+    z-index: 1;
+}
+
 .front-card-btn {
     position: absolute;
     width: 250px;

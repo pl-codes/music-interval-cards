@@ -109,7 +109,8 @@ def create_app():
         return jsonify({            
             "card_values": card_values,
             "total_cards": total_cards,
-            "cards_left": cards_left
+            "cards_left": cards_left,
+            "interval_selection": interval_selection
             })
     
     
