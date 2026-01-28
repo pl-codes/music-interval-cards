@@ -18,15 +18,17 @@
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <button class="front-card-btn" type="button" id="card">Card</button><span id="lower-upper"></span>                
+                        <div class="front-card-name" id="card">Card</div><span class = "lower-upper" id="lowerUpperFront"></span>
+                        <!--<button class="front-card-btn" type="button" id="card">Card</button><span id="lower-upper"></span> -->               
                     </div>
                     <div class="flip-card-back">
-                        <button class="back-card-btn" type="button" id="back-card">Back Card</button>
+                        <div class="back-card-name" id="backCard">Back Card</div><span class = "lower-upper" id="lowerUpperBack"></span>
+                        <!-- <button class="back-card-btn" type="button" id="back-card">Back Card</button> -->
                     </div>
                 </div>
             </div>
             <div class="next">
-                <button type="button" id="next">Next</button> <span id="card_count">
+                <button type="button" id="next">Next</button> <span id="cardCount">
             </div>
             
         </div>
@@ -43,18 +45,7 @@
         document.addEventListener("DOMContentLoaded", function(){
             fetch_card('/start');
         });
-
-        document.getElementById("card").addEventListener("click", function(){
-            if(document.getElementById("card").textContent === show_cards[0]){
-                document.getElementById("card").textContent = show_cards[1];
-                document.getElementById("lower-upper").textContent = lower_upper[1];
-            }
-            else{
-                document.getElementById("card").textContent = show_cards[0];
-                document.getElementById("lower-upper").textContent = lower_upper[0];
-            }
-        })
-        
+               
         document.getElementById("next").addEventListener("click", function(){
             fetch_card('/next')            
         });
@@ -74,10 +65,13 @@
                     remaining_cards = data.cards_left
 
                     document.getElementById("card").textContent = show_cards[0];
-                    document.getElementById("lower-upper").textContent = lower_upper[0];
+                    document.getElementById("lowerUpperFront").textContent = lower_upper[0];
+
+                    document.getElementById("backCard").textContent = show_cards[1];
+                    document.getElementById("lowerUpperBack").textContent = lower_upper[1];
 
                     let cards_used = deck_size - remaining_cards;
-                    document.getElementById("card_count").textContent = cards_used + "/" + deck_size;
+                    document.getElementById("cardCount").textContent = cards_used + "/" + deck_size;
                     
                     if (cards_used >= deck_size){
                         document.getElementById("next").disabled = true;
