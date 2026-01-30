@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: #062e21;
 }
 
 .card-container {
@@ -11,8 +12,8 @@
 
 .flip-card {
     background-color: transparent;
-    width: 250px;
-    height: 80px;
+    width: 350px;
+    height: 160px;
     border: 1px solid #f1f1f1;
     perspective: 1000px;
 }
@@ -65,4 +66,5 @@
 
 #card, #backCard {
     position: absolute;
+    font-size: 50px;
 }
