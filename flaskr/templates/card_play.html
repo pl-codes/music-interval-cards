@@ -4,8 +4,9 @@
 <head>
     <title>Card Play</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="{{ url_for('static', filename='card_play.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 
 <body>
@@ -18,17 +19,15 @@
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <div class="front-card-name" id="card">Card</div><span class = "lower-upper" id="lowerUpperFront"></span>
-                        <!--<button class="front-card-btn" type="button" id="card">Card</button><span id="lower-upper"></span> -->               
+                        <div class="front-card-name" id="card">Card</div><span class = "lower-upper" id="lowerUpperFront"></span>                                     
                     </div>
                     <div class="flip-card-back">
-                        <div class="back-card-name" id="backCard">Back Card</div><span class = "lower-upper" id="lowerUpperBack"></span>
-                        <!-- <button class="back-card-btn" type="button" id="back-card">Back Card</button> -->
+                        <div class="back-card-name" id="backCard">Back Card</div><span class = "lower-upper" id="lowerUpperBack"></span>                        
                     </div>
                 </div>
             </div>
             <div class="next">
-                <button type="button" id="next">Next</button> <span id="cardCount">
+                <button type="button" class="btn btn-success btn-sm mt-0" id="next">Next</button> <span id="cardCount">
             </div>
             
         </div>
@@ -77,8 +76,9 @@
                         document.getElementById("next").disabled = true;
                     }                                    
                 })
-        }        
-
+        }             
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+
     </body>
 </html>
