@@ -1,84 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <title>Card Play</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='card_play.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-</head>
 
-<body>
-    <div class="container">
-        <h1>Let's Practice Intervals!</h1>
-        <div class="card-container">
-            <div class="interval-label">
-                <label id="interval-label">Interval Label</label>
+{% block stylesheet %}<link rel="stylesheet" href="{{ url_for('static', filename='card_play.css') }}">{% endblock %}
+
+{% block content %}            
+<h1>Let's Practice Intervals!</h1>
+<div class="card-container">
+    <div class="interval-label">
+        <label id="interval-label">Interval Label</label>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front">
+                <div class="front-card-name" id="card">Card</div><span class = "lower-upper" id="lowerUpperFront"></span>                                     
             </div>
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <div class="front-card-name" id="card">Card</div><span class = "lower-upper" id="lowerUpperFront"></span>                                     
-                    </div>
-                    <div class="flip-card-back">
-                        <div class="back-card-name" id="backCard">Back Card</div><span class = "lower-upper" id="lowerUpperBack"></span>                        
-                    </div>
-                </div>
+            <div class="flip-card-back">
+                <div class="back-card-name" id="backCard">Back Card</div><span class = "lower-upper" id="lowerUpperBack"></span>                        
             </div>
-            <div class="next">
-                <button type="button" class="btn btn-success btn-sm mt-0" id="next">Next</button> <span id="cardCount">
-            </div>
-            
         </div>
     </div>
+    <div class="next">
+        <button type="button" class="btn btn-success btn-sm mt-0" id="next">Next</button> <span id="cardCount">
+    </div>
     
-
-    <script>
-        let show_cards = [];
-        let lower_upper = ['Lower Key', 'Upper Key']
-        let deck_size;        
-        let remaining_cards;
+</div>
+{% endblock %} 
 
 
-        document.addEventListener("DOMContentLoaded", function(){
-            fetch_card('/start');
-        });
-               
-        document.getElementById("next").addEventListener("click", function(){
-            fetch_card('/next')            
-        });
+{% block script %}
+<script>
+    let show_cards = [];
+    let lower_upper = ['Lower Key', 'Upper Key']
+    let deck_size;        
+    let remaining_cards;
 
-        
-        function fetch_card(route){
-            return fetch(route, {method: "POST"})
-                .then(response => response.json())
-                .then(data => {                    
-                    show_cards = data.card_values;
-                    if (route === '/start'){
-                        deck_size = data.total_cards;
-                        interval_selection = data.interval_selection;
-                        document.getElementById("interval-label").textContent = interval_selection;
-                    }
-                    
-                    remaining_cards = data.cards_left
 
-                    document.getElementById("card").textContent = show_cards[0];
-                    document.getElementById("lowerUpperFront").textContent = lower_upper[0];
+    document.addEventListener("DOMContentLoaded", function(){
+        fetch_card('/start');
+    });
+            
+    document.getElementById("next").addEventListener("click", function(){
+        fetch_card('/next')            
+    });
 
-                    document.getElementById("backCard").textContent = show_cards[1];
-                    document.getElementById("lowerUpperBack").textContent = lower_upper[1];
+    
+    function fetch_card(route){
+        return fetch(route, {method: "POST"})
+            .then(response => response.json())
+            .then(data => {                    
+                show_cards = data.card_values;
+                if (route === '/start'){
+                    deck_size = data.total_cards;
+                    interval_selection = data.interval_selection;
+                    document.getElementById("interval-label").textContent = interval_selection;
+                }
+                
+                remaining_cards = data.cards_left
 
-                    let cards_used = deck_size - remaining_cards;
-                    document.getElementById("cardCount").textContent = cards_used + "/" + deck_size;
-                    
-                    if (cards_used >= deck_size){
-                        document.getElementById("next").disabled = true;
-                    }                                    
-                })
-        }             
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+                document.getElementById("card").textContent = show_cards[0];
+                document.getElementById("lowerUpperFront").textContent = lower_upper[0];
 
-    </body>
-</html>
+                document.getElementById("backCard").textContent = show_cards[1];
+                document.getElementById("lowerUpperBack").textContent = lower_upper[1];
+
+                let cards_used = deck_size - remaining_cards;
+                document.getElementById("cardCount").textContent = cards_used + "/" + deck_size;
+                
+                if (cards_used >= deck_size){
+                    document.getElementById("next").disabled = true;
+                }                                    
+            })
+    }             
+</script>
+{% endblock %}
