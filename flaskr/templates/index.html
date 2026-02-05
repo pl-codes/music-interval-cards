@@ -1,36 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-        <title>Interval Flip Cards</title>
-    </head>
-    
-    <body>
-        <div class="container">
-            <h1>Let's Practice Musical Intervals</h1>
-            <div class="card-container">
-                <form method="POST">
-                    {{ form.hidden_tag() }}
+{% extends "base.html" %}
 
-                    <div class="interval_group">
-                        <label class="form-label">{{ form.choice.label.text }}</label>
+{% block stylesheet %}<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">{% endblock %}
 
-                        {% for subfield in form.choice %}
-                            <div class="form-check">
-                                {{ subfield(class="form-check-input") }}
-                                {{ subfield.label(class="form-check-label") }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        {{ form.submit(class="btn btn-success btn-sm mt-3") }}
-                    </div>
-                </form>
-            </div>
+{% block title %}Interval Flip Cards{% endblock %}
+
+{% block content%}             
+<h1>Let's Practice Musical Intervals</h1>
+<div class="card-container">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="interval_group">
+            <label class="form-label">{{ form.choice.label.text }}</label>
+
+            {% for subfield in form.choice %}
+                <div class="form-check">
+                    {{ subfield(class="form-check-input") }}
+                    {{ subfield.label(class="form-check-label") }}
+                </div>
+            {% endfor %}
         </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>    
-    </body>
-</html>
+        <div class="d-flex justify-content-center">
+            {{ form.submit(class="btn btn-success btn-sm mt-3") }}
+        </div>
+    </form>
+</div>
+{% endblock%}
