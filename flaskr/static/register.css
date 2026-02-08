@@ -1,9 +1,10 @@
+/*
 body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Roboto, sans-serif    
 }
-
+*/
 .container {
     display: flex;
     flex-direction: column;
@@ -13,13 +14,11 @@ body {
 }
 
 .center {
-    background-color: #f5f3f3;
+    background-color: #f4f5f4;
     padding: 5px;
+    color: #062e21;
 }
 
-p {
-    color: #444;            
-}
 
 .input-group {
     display: flex;

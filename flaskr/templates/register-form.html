@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block stylesheet %}<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">{% endblock %}
+{% block stylesheet %}<link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">{% endblock %}
 {% block style_script_fontawesome %}<script src="https://kit.fontawesome.com/465a941719.js" crossorigin="anonymous"></script>{% endblock %}
 {% block title %}Registration Page{% endblock %}
 
 {% block content %}
 <div class="center">
                         
-    <h1>Register</h1>        
+    <h2>Let's Get Started</h2>        
                 
     <form method="post">
         {{ form.hidden_tag()}}
@@ -89,7 +89,7 @@
 
     <p>By creating an account you agree to our <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms & Privacy</a></p>
     
-    {{ form.submit(class="registration-btn") }}
+    {{ form.submit(class="btn btn-success btn-sm") }}
     
     </form>
 
