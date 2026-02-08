@@ -72,6 +72,9 @@ def create_app():
             return redirect(url_for("success"))
         return render_template('register-form.html', form=form)
     
+    @app.route('/terms')
+    def terms():
+        return render_template("terms.html")
 
     @app.route('/success')
     def success():
