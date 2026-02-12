@@ -70,7 +70,7 @@ def create_app():
             print(f"Confirmed Password: {confirm_password}")
             
             return redirect(url_for("success"))
-        return render_template('register-form.html', form=form)
+        return render_template('register-form2.html', form=form)
     
     @app.route('/terms')
     def terms():

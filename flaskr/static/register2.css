@@ -1,0 +1,36 @@
+#eye {
+    display: inline;
+}
+
+#slash_eye {
+    display: none;
+}
+
+#confirm_eye {
+    display: inline;
+}
+
+#confirm_slash_eye {
+    display: none;
+}
+
+.password-group button {    /* This button is for the password "eye" toggle */ 
+    all: unset;
+    cursor: pointer;
+}
+
+.password-group svg {
+    position:absolute;
+    right: 0.75rem;
+    top: 58%;
+    fill: lightgrey   
+}
+
+.password-group {
+    position: relative;
+}
+ 
+.my-box {
+    background-color: #f4f5f4
+}
+

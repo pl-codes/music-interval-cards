@@ -8,18 +8,17 @@
 <div class="center">
                         
     <h2>Let's Get Started</h2>        
-                
     <form method="post">
         {{ form.hidden_tag()}}
     <p id="p1">Please fill in this form to create an account</p>
-    
+        
         <div class="input-group">
             {{ form.username.label }}
             {{ form.username }}
             {% for error in form.username.errors %}
                 <span class="form-errors">{{ error }}</span>
             {% endfor %}
-            
+                
         </div>
         <div class="input-group">
             {{ form.email.label }}
@@ -27,7 +26,7 @@
             {% for error in form.email.errors %}
                 <span class="form-errors">{{ error }}</span>
             {% endfor %}
-            
+                
         </div>
         <div class="input-group password-group">
             {{ form.password.label }}
@@ -56,7 +55,7 @@
             {% for error in form.password.errors %}
                 <span class="form-errors">{{ error }}</span>
             {% endfor %}
-            
+                
         </div>
         <div class="input-group password-group">
             {{ form.confirm_password.label }}
@@ -84,13 +83,13 @@
             {% for error in form.confirm_password.errors %}
                 <span class="form-errors">{{ error }}</span>
             {% endfor %}
-            
+                
         </div>
 
     <p>By creating an account you agree to our <a href="{{ url_for('terms') }}" target="_blank" rel="noopener noreferrer">Terms & Privacy</a></p>
-    
+        
     {{ form.submit(class="btn btn-success btn-sm") }}
-    
+        
     </form>
 
     <p>Already have an account? <a href="#">Sign in</a></p>
