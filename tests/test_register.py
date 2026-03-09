@@ -11,8 +11,7 @@ def driver():
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
     driver.implicitly_wait(3)
-    yield driver
-    #input("\nHit Enter to quit the browser: ")    
+    yield driver        
     driver.quit()
 
 def fill_form(driver, username, email, password, confirm_password):
