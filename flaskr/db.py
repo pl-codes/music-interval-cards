@@ -37,3 +37,10 @@ def row_count(interval_selection):
     cursor.execute(f"SELECT COUNT(*) FROM {interval_selection}")
     total_rows = cursor.fetchone()[0]
     return total_rows
+
+def get_card_db(interval_selection):
+    conn = get_connection(interval_selection)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT * FROM {interval_selection}")
+    card_db = cursor.fetchall()
+    return card_db

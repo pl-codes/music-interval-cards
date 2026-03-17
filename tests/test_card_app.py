@@ -6,8 +6,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
+from flaskr.db import get_card_db
 import time
 import pytest
+
 
 @pytest.fixture
 def driver():
@@ -35,7 +37,9 @@ def read_card(driver):
     time.sleep(0.5)
     upper_key = driver.find_element(By.ID, "backCard").text
 
-    print(f"\n{lower_key}, {upper_key}")
+    #print(f"\n{lower_key}, {upper_key}")
+    return(lower_key, upper_key)
+
 
 
 
@@ -46,17 +50,49 @@ def test_choose_interval(driver):
 
 def test_card_values(driver):
     select_interval(driver)
-    read_card(driver)
+    lower_key, upper_key = read_card(driver)
+    print(f"\n{lower_key}, {upper_key}")
 
 def test_next_card(driver):
     select_interval(driver)
     next_btn = driver.find_element(By.ID, "next")
       
     while True:
-        read_card(driver)
+        lower_key, upper_key = read_card(driver)
+        print(f"\n{lower_key}, {upper_key}")
         count = driver.find_element(By.ID, "cardCount").text
         print(f"({count})")        
         if not next_btn.is_enabled():
             break
         next_btn.click()        
         time.sleep(2)
+
+def test_cards_match_db(driver):
+    card_deck = []
+    card_db = get_card_db('p5th')
+    #print(card_db)
+
+    select_interval(driver)
+    next_btn = driver.find_element(By.ID, "next")
+      
+    while True:
+        lower_key, upper_key = read_card(driver)
+        card_deck.append((lower_key, upper_key))
+        #print(f"\n{lower_key}, {upper_key}")
+        count = driver.find_element(By.ID, "cardCount").text
+        #print(f"({count})")        
+        if not next_btn.is_enabled():
+            break
+        next_btn.click()        
+        time.sleep(2)
+
+    print()
+    for i, pair in enumerate(card_deck, start=1):
+        print("\nDatabase size is now: ", len(card_db))
+        assert pair in card_db, "Matching card values in the database not found!"
+
+        if pair in card_db:
+            print(i, pair, "match")
+            card_db.remove(pair)    # Remove database item to catch any duplicate items from the card_deck
+        else:
+            print(i, pair, "NO match")
