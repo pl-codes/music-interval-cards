@@ -10,12 +10,14 @@ import pytest
 def driver():
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
+    driver.maximize_window()
     driver.implicitly_wait(3)
     yield driver        
     driver.quit()
 
 def fill_form(driver, username, email, password, confirm_password):
-    driver.get("http://localhost:5000/")
+    driver.get("http://localhost:5000/register")
+    time.sleep(1)
     title = driver.title
     assert "Registration Page" in title
 
@@ -42,7 +44,7 @@ def fill_form(driver, username, email, password, confirm_password):
     confirm_password_value = confirm_password_box.get_attribute("value")
     time.sleep(1)
     assert confirm_password in confirm_password_value
-
+    time.sleep(1)
     driver.find_element(By.NAME, "submit").click()
 
     print("\nPage title is:", title)
@@ -53,11 +55,13 @@ def fill_form(driver, username, email, password, confirm_password):
 
 def test_form_valid(driver):
     fill_form(driver, "Jill_Brown", "jill.brown@gmail.com", "Zxcvbnm1", "Zxcvbnm1")
+    time.sleep(1)
     assert "Registration successful!" in driver.page_source, "Expected successful message not found"
 
 def test_form_invalid(driver):
     fill_form(driver, ".", "jill.brown@@gmail.com", "badpsw", "Zxcvbnm1")
-    assert ".2-30 characters, letters, numbers, underscores only—with at least one letter." in driver.page_source, "Expected 'Username' error message not found"    # Error message for Username
-    assert ".Invalid email address." in driver.page_source, "Expected 'Email' error message not found"    # Error message for Email 
-    assert ".8-64 characters and must include at least one uppercase letter, one lowercase letter, and one number." in driver.page_source, "Expected 'Password' error message not found"    # Error message for Password 
-    assert ".Passwords must match." in driver.page_source, "Expected 'Confirm Password' error message not found"    # Error message for Password Confirmation  
+    time.sleep(1)
+    assert "2-30 characters, letters, numbers, underscores only—with at least one letter." in driver.page_source, "Expected 'Username' error message not found"    # Error message for Username
+    assert "Invalid email address." in driver.page_source, "Expected 'Email' error message not found"    # Error message for Email 
+    assert "8-64 characters and must include at least one uppercase letter, one lowercase letter, and one number." in driver.page_source, "Expected 'Password' error message not found"    # Error message for Password 
+    assert "Passwords must match." in driver.page_source, "Expected 'Confirm Password' error message not found"    # Error message for Password Confirmation  
