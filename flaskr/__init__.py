@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, redirect, url_for, jsonify, session, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, RadioField
@@ -8,7 +9,9 @@ import sqlite3
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'secret'    
+    app.config['SECRET_KEY'] = 'secret'
+
+    os.makedirs(app.instance_path, exist_ok=True)    
 
     class RegisterForm(FlaskForm):
         '''
