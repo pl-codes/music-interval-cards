@@ -50,9 +50,8 @@ def create_app():
         '''
         Form for users to login.
         '''
-        email = StringField('Email')
-        password = PasswordField('Password')
-
+        email = StringField('Email', validators=[DataRequired()])
+        password = PasswordField('Password', validators=[DataRequired()])
 
     class IntervalForm(FlaskForm):
         '''
