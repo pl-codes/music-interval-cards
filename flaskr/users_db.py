@@ -1,4 +1,6 @@
 import sqlite3
+import os
+from flask import current_app
 
 def insert_user(username, email, password):
         '''
@@ -8,7 +10,10 @@ def insert_user(username, email, password):
         :param email: User's email
         :param password: User's password (to be hashed in the future)
         '''
-        conn = sqlite3.connect("users.db")
+
+        db =  os.path.join(current_app.instance_path, "users.db")
+        conn = sqlite3.connect(db)
+        #conn = sqlite3.connect("users.db")
         cursor = conn.cursor()
         #password to be hashed in future
         cursor.execute("""
