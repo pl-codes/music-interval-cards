@@ -11,18 +11,37 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'secret'
 
-    os.makedirs(app.instance_path, exist_ok=True)    
+    os.makedirs(app.instance_path, exist_ok=True)
+
+    # One-time initializing script to create the users.db database
+    @app.cli.command("create_db")    
+    def create_db():
+        db =  os.path.join(app.instance_path, "users.db")
+        conn = sqlite3.connect(db)
+        cursor = conn.cursor()
+
+        cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT NOT NULL UNIQUE,
+                    email TEXT NOT NULL UNIQUE,
+                    password TEXT NOT NULL
+                    )
+                    """)
+
+        conn.commit()
+        conn.close()   
 
     class RegisterForm(FlaskForm):
         '''
         Form for users to register.
         '''
         username = StringField('Username', validators=[
-            DataRequired(), Regexp('^(?=.*[a-zA-Z])[a-zA-Z0-9_]{2,30}$', message='2-30 characters, letters, numbers, underscores only—with at least one letter.')
+            DataRequired(), Regexp(r'^(?=.*[a-zA-Z])[a-zA-Z0-9_]{2,30}$', message='2-30 characters, letters, numbers, underscores only—with at least one letter.')
             ])
         email = StringField('Email', validators=[DataRequired(), Email(granular_message=False)])
         password = PasswordField('Password', validators=[
-            DataRequired(), Regexp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,64}$', message='8-64 characters and must include at least one uppercase letter, one lowercase letter, and one number.')
+            DataRequired(), Regexp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,64}$', message='8-64 characters and must include at least one uppercase letter, one lowercase letter, and one number.')
             ])
         confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
         submit = SubmitField('Register')
