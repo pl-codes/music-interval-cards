@@ -46,6 +46,14 @@ def create_app():
         confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
         submit = SubmitField('Register')
 
+    class LoginForm(FlaskForm):
+        '''
+        Form for users to login.
+        '''
+        email = StringField('Email')
+        password = PasswordField('Password')
+
+
     class IntervalForm(FlaskForm):
         '''
         Form for users to select the musical interval to practice.
@@ -105,6 +113,12 @@ def create_app():
         '''
         return "Registration successful!"
     
+    @app.route('/login')
+    def login():
+        '''
+        Displays login page.
+        '''  
+        return render_template('login.html')
     
     @app.route('/play', methods=["GET", "POST"])
     def play():
