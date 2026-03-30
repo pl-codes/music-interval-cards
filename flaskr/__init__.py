@@ -112,12 +112,18 @@ def create_app():
         '''
         return "Registration successful!"
     
-    @app.route('/login')
+    @app.route('/login', methods=['GET', 'POST'])
     def login():
         '''
-        Displays login page.
-        '''  
-        return render_template('login.html')
+        The login page, where a registered user can sign in.
+        '''
+        form = LoginForm()
+        if form.validate_on_submit():            
+            email = form.email.data
+            password = form.password.data
+            print(f"Email: {email}")
+            print(f"Password: {password}")
+        return render_template('login.html', form=form)
     
     @app.route('/play', methods=["GET", "POST"])
     def play():
