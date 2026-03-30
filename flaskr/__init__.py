@@ -52,6 +52,7 @@ def create_app():
         '''
         email = StringField('Email', validators=[DataRequired()])
         password = PasswordField('Password', validators=[DataRequired()])
+        submit = SubmitField('Submit')
 
     class IntervalForm(FlaskForm):
         '''
@@ -123,6 +124,7 @@ def create_app():
             password = form.password.data
             print(f"Email: {email}")
             print(f"Password: {password}")
+            
         return render_template('login.html', form=form)
     
     @app.route('/play', methods=["GET", "POST"])
