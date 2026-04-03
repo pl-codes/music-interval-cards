@@ -41,3 +41,10 @@ def test_form_valid(driver):
     fill_form(driver, "jill.brown@gmail.com", "Zxcvbnm1")
     time.sleep(1)
     #assert "Registration successful!" in driver.page_source, "Expected successful message not found"
+
+def test_form_invalid(driver):
+    fill_form(driver, "","")
+    time.sleep(1)
+    assert "Please provide a valid email" in driver.page_source, "Expected 'Email' error message not found"    # Error message for Email 
+    assert "Please provide a valid password" in driver.page_source, "Expected 'Password' error message not found"    # Error message for Password 
+    time.sleep(1)
