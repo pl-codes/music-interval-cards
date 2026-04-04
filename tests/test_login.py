@@ -33,6 +33,8 @@ def fill_form(driver, email, password):
     time.sleep(1)
     assert password in password_value
 
+    driver.find_element(By.NAME, "submit").click()
+
     print("\nPage title is:", title)    
     print("Email input:", email_value)
     print("Password input:", password_value)
@@ -45,6 +47,10 @@ def test_form_valid(driver):
 def test_form_invalid(driver):
     fill_form(driver, "","")
     time.sleep(1)
-    assert "Please provide a valid email" in driver.page_source, "Expected 'Email' error message not found"    # Error message for Email 
-    assert "Please provide a valid password" in driver.page_source, "Expected 'Password' error message not found"    # Error message for Password 
+    email_error = driver.find_elements(By.CLASS_NAME,"invalid-feedback")[0]
+    password_error = driver.find_elements(By.CLASS_NAME,"invalid-feedback")[1]
+    assert "Please provide a valid email" in email_error.text, "Expected 'Email' error message not found"
+    assert "Please provide a valid password" in password_error.text, "Expected 'Password' error message not found"
+    #assert "Please provide a valid email" in driver.page_source, "Expected 'Email' error message not found"    # Error message for Email 
+    #assert "Please provide a valid password" in driver.page_source, "Expected 'Password' error message not found"    # Error message for Password 
     time.sleep(1)

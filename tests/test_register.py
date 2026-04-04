@@ -45,6 +45,7 @@ def fill_form(driver, username, email, password, confirm_password):
     time.sleep(1)
     assert confirm_password in confirm_password_value
     time.sleep(1)
+    
     driver.find_element(By.NAME, "submit").click()
 
     print("\nPage title is:", title)
