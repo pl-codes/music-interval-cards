@@ -62,7 +62,13 @@ def test_form_valid(driver):
 def test_form_invalid(driver):
     fill_form(driver, ".", "jill.brown@@gmail.com", "badpsw", "Zxcvbnm1")
     time.sleep(1)
-    assert "2-30 characters, letters, numbers, underscores only—with at least one letter." in driver.page_source, "Expected 'Username' error message not found"    # Error message for Username
-    assert "Invalid email address." in driver.page_source, "Expected 'Email' error message not found"    # Error message for Email 
-    assert "8-64 characters and must include at least one uppercase letter, one lowercase letter, and one number." in driver.page_source, "Expected 'Password' error message not found"    # Error message for Password 
-    assert "Passwords must match." in driver.page_source, "Expected 'Confirm Password' error message not found"    # Error message for Password Confirmation  
+
+    username_error = driver.find_element(By.XPATH, "//span[contains(text(), '2-30 characters')]")
+    email_error = driver.find_element(By.XPATH, "//span[contains(text(), 'Invalid email')]")
+    password_error = driver.find_element(By.XPATH, "//span[contains(text(), '8-64 characters')]")
+    confirm_password_error = driver.find_element(By.XPATH, "//span[contains(text(), 'Passwords must match')]")
+
+    assert "2-30 characters, letters, numbers, underscores only—with at least one letter." in username_error.text, "Expected 'Username' error message not found"    # Error message for Username
+    assert "Invalid email address." in email_error.text, "Expected 'Email' error message not found"    # Error message for Email
+    assert "8-64 characters and must include at least one uppercase letter, one lowercase letter, and one number." in password_error.text, "Expected 'Password' error message not found"    # Error message for Password
+    assert "Passwords must match." in confirm_password_error.text, "Expected 'Confirm Password' error message not found"    # Error message for Password Confirmation
