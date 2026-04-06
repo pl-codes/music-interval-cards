@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, url_for, jsonify, session, r
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, RadioField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
-from flaskr.users_db import insert_user
+from flaskr.users_db import insert_user, user_exists, user_exists_email
 from flaskr.card_app import random_number, process_card
 import sqlite3
 
@@ -90,16 +90,21 @@ def create_app():
             username = form.username.data
             email = form.email.data
             password = form.password.data
-            confirm_password = form.confirm_password.data
-
-            insert_user(username, email, password)
+            confirm_password = form.confirm_password.data            
 
             print(f"Username: {username}")
             print(f"Email: {email}")
             print(f"Password: {password}")
             print(f"Confirmed Password: {confirm_password}")
+
+            does_exist = user_exists_email(email)
+
+            if does_exist == True:
+                return redirect(url_for("un_successful"))
+            else:
+                insert_user(username, email, password) 
+                return redirect(url_for("success"))
             
-            return redirect(url_for("success"))
         return render_template('register-form2.html', form=form)
     
     @app.route('/terms')
@@ -111,7 +116,14 @@ def create_app():
         '''
         Displays successful message.
         '''
-        return "Registration successful!"
+        return "Successful! Please <a href='/login'>Login</a>"
+    
+    @app.route('/un-successful')
+    def un_successful():
+        '''
+        Displays un-successful message.
+        '''
+        return "Un-successful. An account with this email already exists"
     
     @app.route('/login', methods=['GET', 'POST'])
     def login():
@@ -124,6 +136,13 @@ def create_app():
             password = form.password.data
             print(f"Email: {email}")
             print(f"Password: {password}")
+            
+            does_exist = user_exists(email, password)
+
+            if does_exist == True:
+                return redirect(url_for("index"))
+            else: 
+                return redirect(url_for("un_successful"))
             
         return render_template('login.html', form=form)
     
