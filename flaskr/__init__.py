@@ -100,31 +100,27 @@ def create_app():
             does_exist = user_exists_email(email)
 
             if does_exist == True:
-                return redirect(url_for("un_successful"))
+                return render_template('register-form2.html', form=form, error="An account with this email already exists")
             else:
                 insert_user(username, email, password) 
                 return redirect(url_for("success"))
             
-        return render_template('register-form2.html', form=form)
+        return render_template('register-form2.html', form=form, error=None)
+    
     
     @app.route('/terms')
     def terms():
         return render_template("terms.html")
+
 
     @app.route('/success')
     def success():
         '''
         Displays successful message.
         '''
-        return "Successful! Please <a href='/login'>Login</a>"
+        return render_template('register-go.html')
     
-    @app.route('/un-successful')
-    def un_successful():
-        '''
-        Displays un-successful message.
-        '''
-        return "Un-successful. An account with this email already exists"
-    
+        
     @app.route('/login', methods=['GET', 'POST'])
     def login():
         '''
@@ -137,14 +133,15 @@ def create_app():
             print(f"Email: {email}")
             print(f"Password: {password}")
             
-            does_exist = user_exists(email, password)
+            does_exist = user_exists(email, password)           
 
             if does_exist == True:
                 return redirect(url_for("index"))
             else: 
-                return redirect(url_for("un_successful"))
+                return render_template('login.html', form=form, error="Invalid email or password")
             
-        return render_template('login.html', form=form)
+        return render_template('login.html', form=form, error=None)
+    
     
     @app.route('/play', methods=["GET", "POST"])
     def play():

@@ -20,6 +20,9 @@
             <div class="invalid-feedback">Please provide a valid password</div>                         
         </div>        
         {{ form.submit(class="btn btn-success btn-sm") }}
+        {% if error %}
+            <div id="submit-error" class="text-danger">{{error}}</div>
+        {% endif %}
     </form>
 </div>
 {% endblock %}
