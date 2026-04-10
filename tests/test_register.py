@@ -72,3 +72,11 @@ def test_form_invalid(driver):
     assert "Invalid email address." in email_error.text, "Expected 'Email' error message not found"    # Error message for Email
     assert "8-64 characters and must include at least one uppercase letter, one lowercase letter, and one number." in password_error.text, "Expected 'Password' error message not found"    # Error message for Password
     assert "Passwords must match." in confirm_password_error.text, "Expected 'Confirm Password' error message not found"    # Error message for Password Confirmation
+
+def test_already_exists(driver):
+    fill_form(driver, "testname", "test.name@gmail.com", "Testname1", "Testname1")
+    time.sleep(1)
+
+    submit_error = driver.find_element(By.ID, "submit-error")
+
+    assert "An account with this email already exists" in submit_error.text, "Expected submit error message not found" # Error message for if users already exists in database
