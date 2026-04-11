@@ -55,9 +55,10 @@ def fill_form(driver, username, email, password, confirm_password):
     print("Password input:", confirm_password_value)
 
 def test_form_valid(driver):
-    fill_form(driver, "Jill_Brown", "jill.brown@gmail.com", "Zxcvbnm1", "Zxcvbnm1")
+    fill_form(driver, "Nick", "nick@gmail.com", "Zxcvbnm1", "Zxcvbnm1")
     time.sleep(1)
-    assert "Registration successful!" in driver.page_source, "Expected successful message not found"
+    success_msg = driver.find_element(By.XPATH, "//p[contains(., 'Successful!')]")
+    assert "Successful! Please Login" in success_msg.text, "Expected successful message not found"
 
 def test_form_invalid(driver):
     fill_form(driver, ".", "jill.brown@@gmail.com", "badpsw", "Zxcvbnm1")
