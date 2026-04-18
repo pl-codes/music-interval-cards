@@ -40,9 +40,10 @@ def fill_form(driver, email, password):
     print("Password input:", password_value)
 
 def test_form_valid(driver):
-    fill_form(driver, "jill.brown@gmail.com", "Zxcvbnm1")
+    fill_form(driver, "jill.brown@gmail.com", "Qwertyui1")
     time.sleep(1)
-    #assert "Registration successful!" in driver.page_source, "Expected successful message not found"
+    greeting = driver.find_element(By.ID, "greeting")
+    assert "Hi jill_brown" in greeting.text, "Expected greeting message not found"
 
 def test_form_invalid(driver):
     fill_form(driver, "","")
