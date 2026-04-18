@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, url_for, jsonify, session, r
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, RadioField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
-from flaskr.users_db import insert_user, user_exists, user_exists_email
+from flaskr.users_db import insert_user, user_exists, user_exists_email, user_exists_name
 from flaskr.card_app import random_number, process_card
 import sqlite3
 
@@ -71,12 +71,16 @@ def create_app():
         The welcome page, where the user can select the musical interval to practice.
         Once selected, it is validated and stored into a session. Then user is directed to the "play" page. 
         '''
+        
+
         form = IntervalForm()
         if form.validate_on_submit():
             selection = form.choice.data
             session["interval_selection"] = selection
             return redirect(url_for('play'))
-        return render_template('index.html', form=form)
+        
+        greeting_name = session.get("username")
+        return render_template('index.html', form=form, greeting_name=greeting_name)
             
 
     @app.route('/register', methods=['GET', 'POST'])
@@ -131,11 +135,13 @@ def create_app():
             email = form.email.data
             password = form.password.data
             print(f"Email: {email}")
-            print(f"Password: {password}")
-            
-            does_exist = user_exists(email, password)           
+            print(f"Password: {password}")            
 
-            if does_exist == True:
+            name = user_exists_name(email, password)     
+
+            if name is not None:
+                session["username"] = name
+                print(f"Hello {name}")
                 return redirect(url_for("index"))
             else: 
                 return render_template('login.html', form=form, error="Invalid email or password")

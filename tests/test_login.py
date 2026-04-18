@@ -51,6 +51,4 @@ def test_form_invalid(driver):
     password_error = driver.find_elements(By.CLASS_NAME,"invalid-feedback")[1]
     assert "Please provide a valid email" in email_error.text, "Expected 'Email' error message not found"
     assert "Please provide a valid password" in password_error.text, "Expected 'Password' error message not found"
-    #assert "Please provide a valid email" in driver.page_source, "Expected 'Email' error message not found"    # Error message for Email 
-    #assert "Please provide a valid password" in driver.page_source, "Expected 'Password' error message not found"    # Error message for Password 
     time.sleep(1)
