@@ -3,9 +3,10 @@ from flask import Flask, render_template, redirect, url_for, jsonify, session, r
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, RadioField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
-from flaskr.users_db import insert_user, user_exists, user_exists_email, user_exists_name
+from flaskr.users_db import insert_user, user_exists, user_exists_email, user_exists_name, user_exists_info
 from flaskr.card_app import random_number, process_card
 import sqlite3
+from werkzeug.security import generate_password_hash, check_password_hash
 
 def create_app():
     app = Flask(__name__)
@@ -94,19 +95,16 @@ def create_app():
             username = form.username.data
             email = form.email.data
             password = form.password.data
-            confirm_password = form.confirm_password.data            
+            confirm_password = form.confirm_password.data
 
-            print(f"Username: {username}")
-            print(f"Email: {email}")
-            print(f"Password: {password}")
-            print(f"Confirmed Password: {confirm_password}")
+            hashed_pw = generate_password_hash(password) 
 
             does_exist = user_exists_email(email)
 
             if does_exist == True:
                 return render_template('register-form2.html', form=form, error="An account with this email already exists")
             else:
-                insert_user(username, email, password) 
+                insert_user(username, email, hashed_pw) 
                 return redirect(url_for("success"))
             
         return render_template('register-form2.html', form=form, error=None)
@@ -133,18 +131,17 @@ def create_app():
         form = LoginForm()
         if form.validate_on_submit():            
             email = form.email.data
-            password = form.password.data
-            print(f"Email: {email}")
-            print(f"Password: {password}")            
+            password = form.password.data           
 
-            name = user_exists_name(email, password)     
+            user = user_exists_info(email)     
 
-            if name is not None:
-                session["username"] = name
-                print(f"Hello {name}")
-                return redirect(url_for("index"))
-            else: 
-                return render_template('login.html', form=form, error="Invalid email or password")
+            if user is not None:
+                valid_login = check_password_hash(user[1], password)
+                if valid_login:
+                    session["username"] = user[0]                
+                    return redirect(url_for("index"))
+                
+            return render_template('login.html', form=form, error="Invalid email or password")
             
         return render_template('login.html', form=form, error=None)
     

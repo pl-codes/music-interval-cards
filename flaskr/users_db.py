@@ -37,6 +37,18 @@ def user_exists_email(email):
         conn.close()
         return does_exist is not None
 
+def user_exists_info(email):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+                       SELECT username, password FROM users
+                       WHERE email = (?)
+                       """, (email,))
+        user = cursor.fetchone()
+        conn.close()
+        return user
+
+
 def user_exists_name(email, password):
         conn = get_connection()
         cursor = conn.cursor()
@@ -60,7 +72,7 @@ def user_exists(email, password):
         conn.close()
         return does_exist is not None
 
-def user_exists_info(email, password):
+def user_exists_info_b(email, password):
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute("""
