@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, url_for, jsonify, session, request
+from flask import Flask, render_template, redirect, url_for, jsonify, session, request, make_response
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, RadioField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
@@ -146,6 +146,18 @@ def create_app():
         return render_template('login.html', form=form, error=None)
     
     
+    @app.route('/logout', methods=["GET", "POST"])
+    def logout():
+        session.clear()
+        response = make_response(redirect(url_for("goodbye")))
+        response.headers['Cache-Control'] = 'no-store'
+        return response
+
+    @app.route('/goodbye')
+    def goodbye():
+        return render_template('goodbye.html')
+
+               
     @app.route('/play', methods=["GET", "POST"])
     def play():
         '''
