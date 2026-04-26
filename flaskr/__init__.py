@@ -146,16 +146,16 @@ def create_app():
         return render_template('login.html', form=form, error=None)
     
     
-    @app.route('/logout', methods=["GET", "POST"])
+    @app.route('/logout')
     def logout():
-        session.clear()
-        response = make_response(redirect(url_for("goodbye")))
-        response.headers['Cache-Control'] = 'no-store'
-        return response
-
-    @app.route('/goodbye')
-    def goodbye():
+        session.clear()        
         return render_template('goodbye.html')
+
+    @app.after_request
+    def no_store(response):
+        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        response.headers['Pragma'] = 'no-cache'
+        return response
 
                
     @app.route('/play', methods=["GET", "POST"])

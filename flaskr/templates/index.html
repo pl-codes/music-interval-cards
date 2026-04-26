@@ -29,3 +29,13 @@
     </form>
 </div>
 {% endblock%}
+
+{% block script %}
+<script>
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted) {  // true if page came from bfcache
+            window.location.reload();  // force a fresh request to the server
+        }
+    });
+</script>
+{% endblock %}
