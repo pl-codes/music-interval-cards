@@ -48,14 +48,8 @@ def fill_form(driver, username, email, password, confirm_password):
     
     driver.find_element(By.NAME, "submit").click()
 
-    print("\nPage title is:", title)
-    print("Username input:", username_value)
-    print("Email input:", email_value)
-    print("Password input:", password_value)
-    print("Password input:", confirm_password_value)
-
 def test_form_valid(driver):
-    fill_form(driver, "Nick", "nick@gmail.com", "Zxcvbnm1", "Zxcvbnm1")
+    fill_form(driver, "john_doe", "john.doe@gmail.com", "Pass@1234", "Pass@1234")
     time.sleep(1)
     success_msg = driver.find_element(By.XPATH, "//p[contains(., 'Successful!')]")
     assert "Successful! Please Login" in success_msg.text, "Expected successful message not found"
@@ -75,7 +69,7 @@ def test_form_invalid(driver):
     assert "Passwords must match." in confirm_password_error.text, "Expected 'Confirm Password' error message not found"    # Error message for Password Confirmation
 
 def test_already_exists(driver):
-    fill_form(driver, "testname", "test.name@gmail.com", "Testname1", "Testname1")
+    fill_form(driver, "john_doe", "john.doe@gmail.com", "Pass@1234", "Pass@1234")
     time.sleep(1)
 
     submit_error = driver.find_element(By.ID, "submit-error")
