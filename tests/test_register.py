@@ -1,12 +1,13 @@
 from selenium.webdriver.common.by import By
 import time
 
-def fill_form(driver, username, email, password, confirm_password):
+def goto_register(driver):
     driver.get("http://localhost:5000/register")
     time.sleep(1)
     title = driver.title
     assert "Registration Page" in title
 
+def fill_form(driver, username, email, password, confirm_password):
     username_box = driver.find_element(By.NAME, "username")
     username_box.send_keys(username)
     username_value = username_box.get_attribute("value")    
@@ -34,8 +35,8 @@ def fill_form(driver, username, email, password, confirm_password):
     
     driver.find_element(By.NAME, "submit").click()
 
-def test_form_valid(driver):
-    fill_form(driver, "john_doe", "john.doe@gmail.com", "Pass@1234", "Pass@1234")
+def form_valid(driver, username, email, pw, pw_confirm):
+    fill_form(driver, username, email, pw, pw_confirm)
     time.sleep(1)
     success_msg = driver.find_element(By.XPATH, "//p[contains(., 'Successful!')]")
     assert "Successful! Please Login" in success_msg.text, "Expected successful message not found"
@@ -61,3 +62,7 @@ def test_already_exists(driver):
     submit_error = driver.find_element(By.ID, "submit-error")
 
     assert "An account with this email already exists" in submit_error.text, "Expected submit error message not found" # Error message for if users already exists in database
+
+def test_form_valid(driver):
+    goto_register(driver)
+    form_valid(driver, "emily_clark", "emily.clark@gmail.com", "Purple&88", "Purple&88" )

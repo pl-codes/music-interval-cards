@@ -1,12 +1,13 @@
 from selenium.webdriver.common.by import By
 import time
 
-def fill_form(driver, email, password):
+def goto_login(driver):
     driver.get("http://localhost:5000/login")
     time.sleep(1)
     title = driver.title
-    assert "Login Page" in title   
+    assert "Login Page" in title  
 
+def fill_form(driver, email, password):
     email_box = driver.find_element(By.NAME, "email")
     email_box.send_keys(email)
     email_value = email_box.get_attribute("value")
@@ -21,11 +22,11 @@ def fill_form(driver, email, password):
 
     driver.find_element(By.NAME, "submit").click()
 
-def test_form_valid(driver):
-    fill_form(driver, "john.doe@gmail.com", "Pass@1234")
+def form_valid(driver, username, email, pw):
+    fill_form(driver, email, pw)
     time.sleep(1)
     greeting = driver.find_element(By.ID, "greeting")
-    assert "Hi john_doe" in greeting.text, "Expected greeting message not found"
+    assert f"Hi {username}" in greeting.text, "Expected greeting message not found"
 
 def test_form_invalid_empty(driver):
     fill_form(driver, "","")
@@ -49,3 +50,11 @@ def test_form_invalid_password(driver):
     invalid_error = driver.find_element(By.ID,"submit-error")
     assert "Invalid email or password" in invalid_error.text, "Expected 'Login' error message not found"    
     time.sleep(1)
+
+def test_form_valid(driver):
+    username = "david_kim"
+    email = "david.kim77@gmail.com"
+    pw = "Ocean!234"
+
+    goto_login(driver)
+    form_valid(driver, username, email, pw)

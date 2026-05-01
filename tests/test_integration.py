@@ -1,9 +1,15 @@
 import test_register
 import test_login
 import time
+from selenium.webdriver.common.by import By
 
 def test_register_login(driver):
-    test_register.fill_form(driver, "john_doe", "john.doe@gmail.com", "Pass@1234", "Pass@1234")
+    username = "lisa_white"
+    email = "lisa.white@gmail.com"
+    pw = "Star$light9"
+
+    test_register.goto_register(driver)
+    test_register.form_valid(driver, username, email, pw, pw)
     time.sleep(1)
-    test_login.fill_form(driver, "john.doe@gmail.com", "Pass@1234")
-    time.sleep(1)
+    driver.find_element(By.CSS_SELECTOR, 'a[href="/login"]').click()
+    test_login.form_valid(driver, username, email, pw)
