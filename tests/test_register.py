@@ -1,6 +1,8 @@
 from selenium.webdriver.common.by import By
 import time
 
+'''HELPER FUNCTIONS'''
+
 def goto_register(driver):
     driver.get("http://localhost:5000/register")
     time.sleep(1)
@@ -41,8 +43,8 @@ def form_valid(driver, username, email, pw, pw_confirm):
     success_msg = driver.find_element(By.XPATH, "//p[contains(., 'Successful!')]")
     assert "Successful! Please Login" in success_msg.text, "Expected successful message not found"
 
-def test_form_invalid(driver):
-    fill_form(driver, ".", "jill.brown@@gmail.com", "badpsw", "Zxcvbnm1")
+def form_invalid(driver, username, email, pw, pw_confirm):
+    fill_form(driver, username, email, pw, pw_confirm)
     time.sleep(1)
 
     username_error = driver.find_element(By.XPATH, "//span[contains(text(), '2-30 characters')]")
@@ -55,14 +57,40 @@ def test_form_invalid(driver):
     assert "8-64 characters and must include at least one uppercase letter, one lowercase letter, and one number." in password_error.text, "Expected 'Password' error message not found"    # Error message for Password
     assert "Passwords must match." in confirm_password_error.text, "Expected 'Confirm Password' error message not found"    # Error message for Password Confirmation
 
-def test_already_exists(driver):
-    fill_form(driver, "john_doe", "john.doe@gmail.com", "Pass@1234", "Pass@1234")
+def already_exists(driver, username, email, pw, pw_confirm):
+    fill_form(driver, username, email, pw, pw_confirm)
     time.sleep(1)
 
     submit_error = driver.find_element(By.ID, "submit-error")
 
     assert "An account with this email already exists" in submit_error.text, "Expected submit error message not found" # Error message for if users already exists in database
 
+
+'''TESTS'''
+
 def test_form_valid(driver):
+    username = "tom_hall"
+    email = "tom.hall99@gmail.com"
+    pw = "Rocket#77"
+
     goto_register(driver)
-    form_valid(driver, "emily_clark", "emily.clark@gmail.com", "Purple&88", "Purple&88" )
+    form_valid(driver, username, email, pw, pw)
+
+
+def test_form_invalid(driver):
+    username = "."
+    email = "jill.brown@@gmail.com"
+    pw = "badpsw"
+    pw_confirm = "Zxcvbnm1"
+
+    goto_register(driver)
+    form_invalid(driver, username, email, pw, pw_confirm)
+
+
+def test_already_exists(driver):
+    username = "john_doe"
+    email = "john.doe@gmail.com"
+    pw = "Pass@1234"
+
+    goto_register(driver)
+    already_exists(driver, username, email, pw, pw)

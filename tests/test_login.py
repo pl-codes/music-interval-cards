@@ -1,6 +1,9 @@
 from selenium.webdriver.common.by import By
 import time
 
+
+'''HELPER FUNCTIONS'''
+
 def goto_login(driver):
     driver.get("http://localhost:5000/login")
     time.sleep(1)
@@ -28,8 +31,8 @@ def form_valid(driver, username, email, pw):
     greeting = driver.find_element(By.ID, "greeting")
     assert f"Hi {username}" in greeting.text, "Expected greeting message not found"
 
-def test_form_invalid_empty(driver):
-    fill_form(driver, "","")
+def form_invalid_empty(driver, email, pw):
+    fill_form(driver, email, pw)
     time.sleep(1)
     email_error = driver.find_elements(By.CLASS_NAME,"invalid-feedback")[0]
     password_error = driver.find_elements(By.CLASS_NAME,"invalid-feedback")[1]
@@ -37,24 +40,52 @@ def test_form_invalid_empty(driver):
     assert "Please provide a valid password" in password_error.text, "Expected 'Password' error message not found"
     time.sleep(1)
 
-def test_form_invalid_email(driver):
-    fill_form(driver, "johny.doe@gmail.com","Pass@1234")
+def form_invalid_email(driver, email, pw):
+    fill_form(driver, email, pw)
     time.sleep(1)
     invalid_error = driver.find_element(By.ID,"submit-error")
     assert "Invalid email or password" in invalid_error.text, "Expected 'Login' error message not found"    
     time.sleep(1)
 
-def test_form_invalid_password(driver):
-    fill_form(driver, "john.doe@gmail.com","Pass@12345")
+def form_invalid_password(driver, email, pw):
+    fill_form(driver, email, pw)
     time.sleep(1)
     invalid_error = driver.find_element(By.ID,"submit-error")
     assert "Invalid email or password" in invalid_error.text, "Expected 'Login' error message not found"    
     time.sleep(1)
+
+
+'''TESTS'''
 
 def test_form_valid(driver):
-    username = "david_kim"
-    email = "david.kim77@gmail.com"
-    pw = "Ocean!234"
+    username = "john_doe"
+    email = "john.doe@gmail.com"
+    pw = "Pass@1234"
 
     goto_login(driver)
     form_valid(driver, username, email, pw)
+
+
+def test_form_invalid_empty(driver):
+    email = ""
+    pw = ""
+
+    goto_login(driver)
+    form_invalid_empty(driver, email, pw)
+
+
+def test_form_invalid_email(driver):
+    email = "johny.doe@gmail.com"
+    pw = "Pass@1234"
+
+    goto_login(driver)
+    form_invalid_email(driver, email, pw)
+
+
+def test_form_invalid_password(driver):
+    email = "john.doe@gmail.com"
+    pw = "Pass@12345"
+
+    goto_login(driver)
+    form_invalid_password(driver, email, pw)
+
