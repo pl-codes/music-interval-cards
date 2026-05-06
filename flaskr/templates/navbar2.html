@@ -11,9 +11,9 @@
       </div>
       <div class="d-flex ms-auto">
         {% if 'username' in session %}        
-          <a class="btn btn-outline-secondary me-2" href="{{ url_for('logout') }}">Logout</a>
+          <a id="logout_btn" class="btn btn-outline-secondary me-2" href="{{ url_for('logout') }}">Logout</a>
         {% else %}
-          <a class="btn btn-outline-success me-2" href="{{ url_for('login') }}">Login</a>
+          <a id="login_btn" class="btn btn-outline-success me-2" href="{{ url_for('login') }}">Login</a>
         {% endif %}
         <a class="btn btn-success" href="{{ url_for('register') }}">Sign Up</a>
       </div> 
