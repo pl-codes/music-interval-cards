@@ -31,7 +31,8 @@ def create_app():
                     """)
 
         conn.commit()
-        conn.close()   
+        conn.close()
+        print("Database created successfully!")   
 
     class RegisterForm(FlaskForm):
         '''

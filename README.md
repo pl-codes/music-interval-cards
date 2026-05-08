@@ -13,8 +13,11 @@ The User:
 ## 🕹️ Getting Started
 
 - Follow [installation](#-installation) process to setup the repo.
-- Run the following script in the terminal: <br>
-Make sure your are in the "flip-card" folder (\<your-project-path>/**flip-card**)
+- Set up the users database. Run the following script in the terminal: <br>
+```
+flask create_db
+```
+- Start the application. Run the following script in the terminal: <br>
 ```
 flask --app flaskr run --debug
 ```
