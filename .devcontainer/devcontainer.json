@@ -12,7 +12,8 @@
                 "ms-python.vscode-pylance",
                 "ms-python.vscode-python-envs",
                 "streetsidesoftware.code-spell-checker",
-                "samuelcolvin.jinjahtml"                
+                "samuelcolvin.jinjahtml",
+                "formulahendry.auto-rename-tag"               
             ]
         }
     },
