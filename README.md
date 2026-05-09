@@ -54,7 +54,7 @@ In the terminal
 ```bash
 git clone https://github.com/pl-codes/music-interval-cards.git
 ```
-The .devcontainer file should be automatically detected and a request from VS Code to "open in Dev Containers" should be displayed. Click Ok.
+In VS Code open the music-interval-cards folder. The .devcontainer file should be automatically detected and a request from VS Code to "open in Dev Containers" should be displayed. Click Ok.
 
 If not:
-- In VS Code, from the Command Palette, run "Dev Containers: Reopen in Container"
+- In VS Code, open the Command Palette (Cmd/Ctrl+Shift+P), run "Dev Containers: Reopen in Container"
