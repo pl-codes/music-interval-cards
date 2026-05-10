@@ -15,8 +15,9 @@ The User:
 - Follow [installation](#-installation) process to setup the repo.
 - Set up the users database. Run the following script in the terminal: <br>
 ```
-flask create_db
+flask --app flaskr create_db
 ```
+(This will create a users database in the instance folder)
 - Start the application. Run the following script in the terminal: <br>
 ```
 flask --app flaskr run --debug

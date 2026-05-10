@@ -13,7 +13,8 @@
                 "ms-python.vscode-python-envs",
                 "streetsidesoftware.code-spell-checker",
                 "samuelcolvin.jinjahtml",
-                "formulahendry.auto-rename-tag"               
+                "formulahendry.auto-rename-tag",
+                "qwtel.sqlite-viewer"               
             ]
         }
     },
