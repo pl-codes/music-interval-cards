@@ -37,6 +37,7 @@ flask --app flaskr run --debug
 <br>
 
 ## 📦 Installation
+Follow the instructions to install in either GitHub Codespaces, your local development using Docker, or your local development without a container (use this for testing!)
 ### Installing in GitHub Codespaces
 - In the "music-interval-cards" repo, click the green **Code** button.
 - Select **Codespaces**.
@@ -44,13 +45,11 @@ flask --app flaskr run --debug
 
 (The .devcontainer file should be automatically detected and build the dependencies.)
 
-### Installing in your Local Development
+### Installing in your Local Development via the Docker container
 (e.g. using VS Code)
 - Install Docker Desktop
 - Install Dev Containers extension in VS Code
-- In the terminal, clone the repository:
-
-In the terminal
+- Using the terminal (bash), clone the repository:
 
 ```bash
 git clone https://github.com/pl-codes/music-interval-cards.git
@@ -59,3 +58,44 @@ In VS Code open the music-interval-cards folder. The .devcontainer file should b
 
 If not:
 - In VS Code, open the Command Palette (Cmd/Ctrl+Shift+P), run "Dev Containers: Reopen in Container"
+<br>
+
+### Installing in your Local Development (no container, **use this method to run selenium automated tests**)
+
+(e.g. using VS Code)
+- Using the terminal (bash), clone the repository:
+```bash
+git clone https://github.com/pl-codes/music-interval-cards.git
+```
+*Ignore prompt to open in a container if asked*
+
+<br>
+
+- Move to the repo folder:
+```bash
+cd music-interval-cards
+```
+<br>
+
+- Create a virtual environment:
+```bash
+python -m venv venv
+```
+<br>
+
+- Activate the virtual environment:
+
+For Linux/macOS
+```bash
+source venv/bin/activate
+```
+For Windows
+```bash
+source venv/Scripts/activate
+```
+<br>
+
+- Install the packages:
+```bash
+pip install -r requirements.txt 
+```
