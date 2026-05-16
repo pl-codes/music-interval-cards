@@ -22,7 +22,7 @@ flask --app flaskr create_db
 ```
 flask --app flaskr run --debug
 ```
-(This will run in debug mode inside the Docker dev container, with its local port 5000 forwarded to your local machine to be opened in your browser)
+(This will run in debug mode and in the browser)
 - To end the session, Press **Ctrl + C** in the terminal.  
 
 <br>
